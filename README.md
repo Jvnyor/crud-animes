@@ -31,7 +31,7 @@ http://localhost:8080/ - URL Tomcat server
 
 /customers/{id} - Return a Costumer by Id - GET
 
-/customers/find?name={name} - Return a Costumer by name - GET
+/customers/?name={name} - Return a Costumer by name - GET
 
 /customers/ - Add a Costumer - POST
 

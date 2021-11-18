@@ -42,7 +42,7 @@ public class CustomerController {
 		return ResponseEntity.ok(customerService.findById(id));
 	}
 	
-	@GetMapping("/find")
+	@GetMapping("/")
 	@Operation(summary = "Returns customer by name",description="Returns a Customer by Name")
 	public ResponseEntity<Customer> findByName(@RequestParam String name) {
 		return ResponseEntity.ok(customerService.findByName(name));
