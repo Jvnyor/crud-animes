@@ -14,9 +14,12 @@ import br.com.josias.apirest.requests.CustomerPutRequestBody;
 
 @Service
 public class CustomerService {
-
 	@Autowired
-	private CustomerRepository customerRepository;
+	public CustomerService(CustomerRepository customerRepository) {
+		this.customerRepository = customerRepository;
+	}
+
+	private final CustomerRepository customerRepository;
 	
 	public List<Customer> listAll() {
 		return customerRepository.findAll();
@@ -27,7 +30,7 @@ public class CustomerService {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer not found"));
 	}
 	
-	public Customer findByName(String name) {
+	public List<Customer> findByName(String name) {
 		return customerRepository.findByName(name);
 	}
 	

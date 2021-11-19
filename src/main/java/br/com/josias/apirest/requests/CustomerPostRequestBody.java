@@ -3,9 +3,11 @@ package br.com.josias.apirest.requests;
 import javax.validation.constraints.NotEmpty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class CustomerPostRequestBody {
 
 	@NotEmpty(message = "The customer name cannot be empty")

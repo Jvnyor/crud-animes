@@ -28,7 +28,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class CustomerController {
 
 	@Autowired
-	private CustomerService customerService;
+	public CustomerController(CustomerService customerService) {
+		this.customerService = customerService;
+	}
+
+	private final CustomerService customerService;
 	
 	@GetMapping
 	@Operation(summary = "List of all customers",description="Returns list of all Customers")
@@ -44,7 +48,7 @@ public class CustomerController {
 	
 	@GetMapping("/")
 	@Operation(summary = "Returns customer by name",description="Returns a Customer by Name")
-	public ResponseEntity<Customer> findByName(@RequestParam String name) {
+	public ResponseEntity<List<Customer>> findByName(@RequestParam String name) {
 		return ResponseEntity.ok(customerService.findByName(name));
 	}
 	
