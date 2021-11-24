@@ -10,27 +10,23 @@
 
 Show columns and values of database created:
 
-`SELECT customer.id,
-    customer.name,
-    customer.email,
-    customer.phone
-FROM customers.customer;`
+`SELECT * FROM customers.customer;`
 
 ## Requests
 
 http://localhost:8080/ - URL Tomcat server
 
-/customers/ - Return list of all Costumers - GET 
+/api/user - Return list of all Costumers - GET 
 
-/customers/{id} - Return a Costumer by Id - GET
+/api/user/{id} - Return a Costumer by Id - GET
 
-/customers/?name={name} - Return a Costumer by name - GET
+/api/user/?name={name} - Return a Costumer by name - GET
 
-/customers/ - Add a Costumer - POST
+/api/ - Add a Costumer - POST
 
-/customers/{id} - Delete Costumer by Id - DELETE
+/api/admin/{id} - Delete Costumer by Id - DELETE
 
-/customers/ - Update Costumer by Id - PUT
+/api/admin - Update Costumer by Id - PUT
 
 ## Swagger UI
 
