@@ -55,8 +55,8 @@ public class CustomerController {
 	@PostMapping
 	@Operation(summary = "Save customers",description="Save Customer")
 	public ResponseEntity<Customer> save(@RequestBody CustomerPostRequestBody customerPostRequestBody) {
-		customerService.save(customerPostRequestBody);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		
+		return new ResponseEntity<>(customerService.save(customerPostRequestBody),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/admin/{id}")
