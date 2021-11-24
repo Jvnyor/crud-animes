@@ -16,17 +16,17 @@ Show columns and values of database created:
 
 http://localhost:8080/ - URL Tomcat server
 
-/api/user - Return list of all Costumers - GET 
+/api/user - Return list of all Customer Users - GET 
 
-/api/user/{id} - Return a Costumer by Id - GET
+/api/user/{id} - Return a Customer User by Id - GET
 
-/api/user/?name={name} - Return a Costumer by name - GET
+/api/user/?name={name} - Return a Customer by name - GET
 
-/api/ - Add to register a Costumer - POST
+/api/ - Register Customer User - POST
 
-/api/admin/{id} - Delete Costumer by Id - DELETE
+/api/admin/{id} - Delete Customer User by Id - DELETE
 
-/api/admin - Update Costumer by Id - PUT
+/api/admin - Update Customer User byoId - PUT
 
 ## Swagger UI
 
