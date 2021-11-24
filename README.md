@@ -22,7 +22,7 @@ http://localhost:8080/ - URL Tomcat server
 
 /api/user/?name={name} - Return a Costumer by name - GET
 
-/api/ - Add a Costumer - POST
+/api/ - Add to register a Costumer - POST
 
 /api/admin/{id} - Delete Costumer by Id - DELETE
 
