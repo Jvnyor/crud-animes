@@ -8,13 +8,6 @@
 
 ## Querys MySQL
 
-`CREATE TABLE customer(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    phone VARCHAR(100),
-    PRIMARY KEY ( id ));`
-
 Show columns and values of database created:
 
 `SELECT customer.id,
