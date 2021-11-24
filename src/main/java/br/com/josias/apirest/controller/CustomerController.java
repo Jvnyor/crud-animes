@@ -52,21 +52,21 @@ public class CustomerController {
 		return ResponseEntity.ok(customerService.findByName(name));
 	}
 	
-	@PostMapping
+	@PostMapping("/admin")
 	@Operation(summary = "Save customers",description="Save Customer")
 	public ResponseEntity<Customer> save(@RequestBody CustomerPostRequestBody customerPostRequestBody) {
 		
 		return new ResponseEntity<>(customerService.save(customerPostRequestBody),HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/admin/{id}")
 	@Operation(summary = "Delete customer by id",description="Delete Customer by Id")
 	public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
 		customerService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-	@PutMapping
+	@PutMapping("/admin")
 	@Operation(summary = "replace customer by id",description="Replace Customer by Id")
 	public ResponseEntity<Void> replace(@RequestBody CustomerPutRequestBody customerPutRequestBody) {
 		customerService.replace(customerPutRequestBody);
