@@ -23,8 +23,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name="API REST Customers")
-@RequestMapping("/customers")
+@Tag(name="API REST for register Customers")
+@RequestMapping("/api")
 public class CustomerController {
 
 	@Autowired
@@ -34,29 +34,29 @@ public class CustomerController {
 
 	private final CustomerService customerService;
 	
-	@GetMapping
+	@GetMapping("/user")
 	@Operation(summary = "List of all customers",description="Returns list of all Customers")
 	public ResponseEntity<List<Customer>> list() {
 		return ResponseEntity.ok(customerService.listAll());
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/user/{id}")
 	@Operation(summary = "Returns customer by id",description="Returns a Customer by Id")
 	public ResponseEntity<Customer> findById(@PathVariable long id) throws Exception {
 		return ResponseEntity.ok(customerService.findById(id));
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/user/")
 	@Operation(summary = "Returns customer by name",description="Returns a Customer by Name")
 	public ResponseEntity<List<Customer>> findByName(@RequestParam String name) {
 		return ResponseEntity.ok(customerService.findByName(name));
 	}
 	
-	@PostMapping("/admin")
+	@PostMapping
 	@Operation(summary = "Save customers",description="Save Customer")
 	public ResponseEntity<Customer> save(@RequestBody CustomerPostRequestBody customerPostRequestBody) {
-		
-		return new ResponseEntity<>(customerService.save(customerPostRequestBody),HttpStatus.CREATED);
+		customerService.save(customerPostRequestBody);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/admin/{id}")

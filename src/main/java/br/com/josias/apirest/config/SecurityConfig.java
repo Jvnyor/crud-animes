@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import br.com.josias.apirest.service.UserService;
+import br.com.josias.apirest.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final UserService userService;
+	private final CustomerService customerService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		log.info("Password encoded admin {}", passwordEncoder.encode("admin"));
 		
 		//Em banco de dados
-		auth.userDetailsService(userService)
+		auth.userDetailsService(customerService)
 					.passwordEncoder(passwordEncoder);
 	}
 
@@ -34,15 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/customers/admin/**").hasRole("ADMIN")
-				.antMatchers("/customers/**").hasRole("USER")
-				.antMatchers("/user/**").authenticated()
+				.antMatchers("/api/admin/**").hasRole("ADMIN")
+				.antMatchers("/api/user/**").hasRole("USER")
 				.anyRequest()
 				.authenticated()
 				.and()
 				.formLogin()
 				.and()
-				.httpBasic();
+				.httpBasic()
+				.and()
+				.antMatcher("/api/")
+				.authorizeRequests();
 	}
 	
 	
