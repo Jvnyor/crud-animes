@@ -24,13 +24,17 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-public class Customer implements UserDetails {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String name;
+	private String firstName;
+	
+	private String lastName;
+	
+	private String fullName;
 	
 	private String username;
 	
@@ -39,7 +43,7 @@ public class Customer implements UserDetails {
 	private String password;
 	
 	private String authorities;
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
