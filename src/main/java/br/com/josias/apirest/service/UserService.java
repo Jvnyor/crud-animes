@@ -71,32 +71,32 @@ public class UserService implements UserDetailsService {
 				.username(userPostRequestBody.getUsername())
 				.password(passwordEncoder.encode(userPostRequestBody.getPassword()))
 				.email(userPostRequestBody.getEmail())
-				.authorities("ROLE_USER")
 				.build());
 		
 	}
 	
-	public void replace(UserPutRequestBody userPutRequestBody) {
-		PasswordEncoder passwordEncoder = PasswordEncoderFactories
-				.createDelegatingPasswordEncoder();
+//	public void replace(UserPutRequestBody userPutRequestBody) {
+//		PasswordEncoder passwordEncoder = PasswordEncoderFactories
+//				.createDelegatingPasswordEncoder();
+//		
+//		if (!idToReplaceUser(userPutRequestBody.getId())) {
+//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not exists");
+//		} else if (idToReplaceUser(userPutRequestBody.getId()) && emailExist(userPutRequestBody.getEmail()) || usernameExist(userPutRequestBody.getUsername()) && passwordExist(userPutRequestBody.getPassword())) {
+//			User savedUser = findById(userPutRequestBody.getId());
+//			userRepository.save(User.builder()
+//					.id(savedUser.getId())
+//					.firstName(userPutRequestBody.getFirstName())
+//					.lastName(userPutRequestBody.getLastName())
+//					.fullName(userPutRequestBody.getFirstName()+" "+userPutRequestBody.getLastName())
+//					.username(userPutRequestBody.getUsername())
+//					.password(passwordEncoder.encode(userPutRequestBody.getPassword()))
+//					.email(userPutRequestBody.getEmail())
+//					.build());
+//		}
 		
-		if (emailExist(userPutRequestBody.getEmail()) || usernameExist(userPutRequestBody.getUsername())) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail or Username already exists");
-		}
 		
-		User savedCustomer = findById(userPutRequestBody.getId());
-		userRepository.save(User.builder()
-				.id(savedCustomer.getId())
-				.firstName(userPutRequestBody.getFirstName())
-				.lastName(userPutRequestBody.getLastName())
-				.fullName(userPutRequestBody.getFirstName()+" "+userPutRequestBody.getLastName())
-				.username(userPutRequestBody.getUsername())
-				.password(passwordEncoder.encode(userPutRequestBody.getPassword()))
-				.email(userPutRequestBody.getEmail())
-				.authorities("ROLE_USER")
-				.build());
 		
-	}
+//	}
 	
 	public void delete(Long id) {
 		userRepository.delete(findById(id));
@@ -106,7 +106,13 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByUsername(username) != null;
 	}
 	
+	private boolean idToReplaceUser(Long id) {
+		return userRepository.findById(id) != null;
+	}
+	
 	private boolean emailExist(String email) {
 		return userRepository.findByEmail(email) != null;
 	}
+	
+
 }

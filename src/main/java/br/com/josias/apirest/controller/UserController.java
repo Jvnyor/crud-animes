@@ -35,42 +35,42 @@ public class UserController {
 	private final UserService userService;
 	
 	@GetMapping("/user")
-	@Operation(summary = "List of all customers",description="Returns list of all Customers")
-	public ResponseEntity<List<User>> list() {
+	@Operation(summary = "List of all users",description="Returns list of all users")
+	public ResponseEntity<List<User>> listUsers() {
 		return ResponseEntity.ok(userService.listAll());
 	}
 	
 	@GetMapping("/user/{id}")
-	@Operation(summary = "Returns customer by id",description="Returns a Customer by Id")
-	public ResponseEntity<User> findById(@PathVariable long id) throws Exception {
+	@Operation(summary = "Returns a user by id",description="Returns a user by Id")
+	public ResponseEntity<User> findUserById(@PathVariable long id) throws Exception {
 		return ResponseEntity.ok(userService.findById(id));
 	}
 	
 	@GetMapping("/user/")
-	@Operation(summary = "Returns customer by name",description="Returns a Customer by Name")
-	public ResponseEntity<List<User>> findByName(@RequestParam String fullName) {
+	@Operation(summary = "Returns users by full name",description="Returns a users by full name")
+	public ResponseEntity<List<User>> findUserByFullName(@RequestParam String fullName) {
 		return ResponseEntity.ok(userService.findByFullName(fullName));
 	}
 	
 	@PostMapping
-	@Operation(summary = "Save customers",description="Save Customer")
-	public ResponseEntity<User> save(@RequestBody UserPostRequestBody userPostRequestBody) {
+	@Operation(summary = "Register user",description="Register user")
+	public ResponseEntity<User> registerUser(@RequestBody UserPostRequestBody userPostRequestBody) {
 		
 		return new ResponseEntity<>(userService.save(userPostRequestBody),HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/admin/{id}")
-	@Operation(summary = "Delete customer by id",description="Delete Customer by Id")
-	public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+	@Operation(summary = "Delete user by id",description="Delete user by Id")
+	public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws Exception {
 		userService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-	@PutMapping("/admin")
-	@Operation(summary = "replace customer by id",description="Replace Customer by Id")
-	public ResponseEntity<Void> replace(@RequestBody UserPutRequestBody userPutRequestBody) {
-		userService.replace(userPutRequestBody);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
+//	@PutMapping("/user")
+//	@Operation(summary = "replace customer by id",description="Replace Customer by Id")
+//	public ResponseEntity<Void> replace(@RequestBody UserPutRequestBody userPutRequestBody) {
+//		userService.replace(userPutRequestBody);
+//		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//	}
 	
 }

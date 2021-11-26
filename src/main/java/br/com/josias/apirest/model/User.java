@@ -42,7 +42,7 @@ public class User implements UserDetails {
 	
 	private String password;
 	
-	private String authorities;
+	private final String authorities = "ROLE_USER";
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
