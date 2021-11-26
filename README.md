@@ -26,7 +26,7 @@ http://localhost:8080/ - URL Tomcat server
 
 /api/admin/{id} - Delete User by Id - DELETE
 
-/api/admin - Update User by Id - PUT
+<!--/api/user - Update User by Id - PUT-->
 
-### Use to requests Postman or Swagger UI.
+### Use to requests Postman or Swagger UI (Swagger requires authentication).
 
