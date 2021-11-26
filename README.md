@@ -1,4 +1,4 @@
-# CRUD Rest API to register Users in Spring Boot
+# Rest API to register Users with authentication in Spring Boot
 
 ## Database MySQL User Root
 - Username: root
