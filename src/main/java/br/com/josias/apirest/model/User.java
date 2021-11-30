@@ -34,22 +34,24 @@ public class User implements UserDetails {
 	
 	private String lastName;
 	
-	private String fullName;
-	
-	private String username;
-	
 	private String email;
 	
 	private String password;
 	
-	private final String authorities = "ROLE_USER";
-	
+	private String authorities;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return Arrays.stream(authorities.split(","))
 								.map(SimpleGrantedAuthority::new)
 								.collect(Collectors.toList());
+	}
+	
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
 	}
 
 	@Override
@@ -75,4 +77,6 @@ public class User implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	
 }

@@ -1,6 +1,5 @@
 package br.com.josias.apirest.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.josias.apirest.model.User;
+import br.com.josias.apirest.model.roles.UserRoles;
 import br.com.josias.apirest.repository.UserRepository;
 import br.com.josias.apirest.requests.UserPostRequestBody;
-import br.com.josias.apirest.requests.UserPutRequestBody;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -28,49 +27,36 @@ public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(userRepository.findByUsername(username))
-							.orElseThrow(() -> new UsernameNotFoundException("User is not found"));
-	}
-	
-	public User findByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return Optional.ofNullable(userRepository.findByEmail(email))
+							.orElseThrow(() -> new UsernameNotFoundException("E-mail not found"));
 	}
 	
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
 	
-	public List<User> listAll() {
-		return userRepository.findAll();
-	}
-	
 	public User findById(Long id) {
 		return userRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-																"Customer not found"));
-	}
-	
-	public List<User> findByFullName(String fullName) {
-		return userRepository.findByFullName(fullName);
+																"User not found"));
 	}
 	
 	public User save(UserPostRequestBody userPostRequestBody) {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories
 				.createDelegatingPasswordEncoder();
 		
-		if (emailExist(userPostRequestBody.getEmail()) || usernameExist(userPostRequestBody.getUsername())) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail or Username already exists");
+		if (emailExist(userPostRequestBody.getEmail())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail already exists");
 		}
 		
 		return userRepository.save(User.builder()
 				.firstName(userPostRequestBody.getFirstName())
 				.lastName(userPostRequestBody.getLastName())
-				.fullName(userPostRequestBody.getFirstName()+" "+userPostRequestBody.getLastName())
-				.username(userPostRequestBody.getUsername())
-				.password(passwordEncoder.encode(userPostRequestBody.getPassword()))
 				.email(userPostRequestBody.getEmail())
+				.password(passwordEncoder.encode(userPostRequestBody.getPassword()))
+				.authorities(String.valueOf(UserRoles.ROLE_USER))
 				.build());
 		
 	}
@@ -87,8 +73,6 @@ public class UserService implements UserDetailsService {
 //					.id(savedUser.getId())
 //					.firstName(userPutRequestBody.getFirstName())
 //					.lastName(userPutRequestBody.getLastName())
-//					.fullName(userPutRequestBody.getFirstName()+" "+userPutRequestBody.getLastName())
-//					.username(userPutRequestBody.getUsername())
 //					.password(passwordEncoder.encode(userPutRequestBody.getPassword()))
 //					.email(userPutRequestBody.getEmail())
 //					.build());
@@ -102,13 +86,9 @@ public class UserService implements UserDetailsService {
 		userRepository.delete(findById(id));
 	}
 	
-	private boolean usernameExist(String username) {
-		return userRepository.findByUsername(username) != null;
-	}
-	
-	private boolean idToReplaceUser(Long id) {
-		return userRepository.findById(id) != null;
-	}
+//	private boolean idToReplaceUser(Long id) {
+//		return userRepository.findById(id) != null;
+//	}
 	
 	private boolean emailExist(String email) {
 		return userRepository.findByEmail(email) != null;
