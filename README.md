@@ -1,4 +1,4 @@
-# Rest API to register Users with authentication in Spring Boot
+# Rest API to create Animes list and register Users for authentication with Spring Boot
 
 ## Database MySQL User Root
 - Username: root
@@ -6,27 +6,20 @@
 
 *src/main/resources/aplications.properties*
 
-## Querys MySQL
-
-Show columns and values of database created:
-
-`SELECT * FROM users.user;`
-
 ## Requests
 
 http://localhost:8080/ - URL Tomcat server
 
-/api/user - Return list of all Users - GET 
+/api/api/v1/user/animes - Return list of all Animes - GET 
 
-/api/user/{id} - Return a User by Id - GET
+/api/api/v1/user/animes/{id} - Return a Anime by Id - GET
 
-/api/user/?name={name} - Return a User by name - GET
+/api/v1/user/animes/?name={name} - Return a User by name - GET
 
-/api/ - Register User - POST
+/api/v1/user/animes/{id} - Delete User by Id - DELETE
 
-/api/admin/{id} - Delete User by Id - DELETE
+## Requests authentication
 
-<!--/api/user - Update User by Id - PUT-->
-
+/api/v1/register - Register User - POST
 ### Use to requests Postman or Swagger UI (Swagger requires authentication).
 
