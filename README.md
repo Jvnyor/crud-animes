@@ -14,9 +14,9 @@ http://localhost:8080/ - URL Tomcat server
 
 /api/api/v1/user/animes/{id} - Return a Anime by Id - GET
 
-/api/v1/user/animes/?name={name} - Return a User by name - GET
+/api/v1/user/animes/?name={name} - Return a Anime by name - GET
 
-/api/v1/user/animes/{id} - Delete User by Id - DELETE
+/api/v1/user/animes/{id} - Delete Anime by Id - DELETE
 
 ## Requests authentication
 
