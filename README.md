@@ -10,16 +10,18 @@
 
 http://localhost:8080/ - URL Tomcat server
 
-/api/api/v1/user/animes - Return list of all Animes - GET 
+/api/v1/animes/user/ - Return list paginated of all Animes - GET 
 
-/api/api/v1/user/animes/{id} - Return a Anime by Id - GET
+/api/v1/animes/user/all - Return list of all Animes - GET 
 
-/api/v1/user/animes/?name={name} - Return a Anime by name - GET
+/api/v1/animes/user/{id} - Return a Anime by Id - GET
 
-/api/v1/user/animes/{id} - Delete Anime by Id - DELETE
+/api/v1/animes/user/find?name={name} - Return a Anime by name - GET
+
+/api/v1/animes/user/{id} - Delete Anime by Id - DELETE
 
 ## Requests authentication
 
-/api/v1/register - Register User - POST
+/api/v1/animes/register - Register User - POST
 ### Use to requests Postman or Swagger UI (Swagger requires authentication).
 

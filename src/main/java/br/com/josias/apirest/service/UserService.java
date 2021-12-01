@@ -8,13 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.josias.apirest.config.PasswordEncoder;
 import br.com.josias.apirest.model.User;
-import br.com.josias.apirest.model.roles.UserRoles;
 import br.com.josias.apirest.repository.UserRepository;
 import br.com.josias.apirest.requests.UserPostRequestBody;
 
@@ -25,6 +23,8 @@ public class UserService implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 
+	private PasswordEncoder passwordEncoder;
+	
 	private final UserRepository userRepository;
 	
 	@Override
@@ -49,8 +49,6 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public User save(UserPostRequestBody userPostRequestBody) {
-		PasswordEncoder passwordEncoder = PasswordEncoderFactories
-				.createDelegatingPasswordEncoder();
 		
 		if (emailExist(userPostRequestBody.getEmail())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail already exists");
@@ -60,8 +58,8 @@ public class UserService implements UserDetailsService {
 				.firstName(userPostRequestBody.getFirstName())
 				.lastName(userPostRequestBody.getLastName())
 				.email(userPostRequestBody.getEmail())
-				.password(passwordEncoder.encode(userPostRequestBody.getPassword()))
-				.authorities(String.valueOf(UserRoles.ROLE_USER))
+				.password(passwordEncoder.bCryptPasswordEncoder().encode(userPostRequestBody.getPassword()))
+				.authorities("ROLE_USER")
 				.build());
 		
 	}
