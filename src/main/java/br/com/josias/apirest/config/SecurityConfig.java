@@ -5,13 +5,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.josias.apirest.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -33,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/api/v1/register").permitAll()
-				.antMatchers("/api/v1/admin/**").hasRole("ADMIN")
-				.antMatchers("/api/v1/user/**").hasRole("USER")
+				.antMatchers("/api/v1/animes/registration").permitAll()
+				.antMatchers("/api/v1/animes/admin/**").hasRole("ADMIN")
+				.antMatchers("/api/v1/animes/user/**").hasRole("USER")
 				.anyRequest()
 				.authenticated()
 				.and()

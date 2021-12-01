@@ -1,5 +1,6 @@
 package br.com.josias.apirest.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class UserService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(userRepository.findByEmail(email))
 							.orElseThrow(() -> new UsernameNotFoundException("E-mail not found"));
+	}
+	
+	public List<User> listAll() {
+		return userRepository.findAll();
 	}
 	
 	public User findByEmail(String email) {

@@ -1,5 +1,7 @@
 package br.com.josias.apirest.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name="API REST for register users")
-@RequestMapping("/api/v1")
+@Tag(name="Registration users and control users information")
+@RequestMapping("/api/v1/animes")
 public class UserController {
 
 	@Autowired
@@ -29,15 +31,20 @@ public class UserController {
 
 	private final UserService userService;
 	
+	@GetMapping("/admin")
+	public ResponseEntity<List<User>> listAllUsers() {
+		return ResponseEntity.ok(userService.listAll());
+	}
+	
 	@GetMapping("/admin/{id}")
 	@Operation(summary = "Returns a user by id",description="Returns a user by Id")
 	public ResponseEntity<User> findUserById(@PathVariable long id) throws Exception {
 		return ResponseEntity.ok(userService.findById(id));
 	}
 	
-	@PostMapping("/register")
-	@Operation(summary = "Register user",description="Register user")
-	public ResponseEntity<String> registerUser(@RequestBody UserPostRequestBody userPostRequestBody) {
+	@PostMapping("/registration")
+	@Operation(summary = "Create user",description="Create user")
+	public ResponseEntity<String> createUser(@RequestBody UserPostRequestBody userPostRequestBody) {
 		userService.save(userPostRequestBody);
 
 		return new ResponseEntity<>("Usuário criado com sucesso!",HttpStatus.CREATED);

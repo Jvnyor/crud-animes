@@ -2,7 +2,10 @@ package br.com.josias.apirest.controller;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,9 +22,12 @@ import br.com.josias.apirest.model.Anime;
 import br.com.josias.apirest.requests.AnimePostRequestBody;
 import br.com.josias.apirest.requests.AnimePutRequestBody;
 import br.com.josias.apirest.service.AnimeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/v1/user/animes")
+@Tag(name="CRUD Animes")
+@RequestMapping("/api/v1/animes/user")
 public class AnimeController {
 
 	private AnimeService animeService;
@@ -32,11 +38,20 @@ public class AnimeController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Anime>> allAnimes(Anime anime) {
-		return ResponseEntity.ok(animeService.listAll());
+	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
+	tags = {"anime"})
+	public ResponseEntity<Page<Anime>> listAllAnimesPageable(@ParameterObject Pageable pageable) {
+		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/all")
+	@Operation(summary = "List all animes no paginated", description = "list of all animes",tags = {"anime"})
+	public ResponseEntity<List<Anime>> listAllAnimesNonPageable() {
+		return ResponseEntity.ok(animeService.listAllNonPageable());
+	}
+	
+	@GetMapping("/search")
+	@Operation(summary = "Find animes by name with request param", description = "find animes by name",tags = {"anime"})
 	public ResponseEntity<List<Anime>> findAnimeByName(@RequestParam String name) {
 		return ResponseEntity.ok(animeService.findByName(name));
 	}
