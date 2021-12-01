@@ -22,6 +22,6 @@ http://localhost:8080/ - URL Tomcat server
 
 ## Requests authentication
 
-/api/v1/animes/register - Register User - POST
+/api/v1/animes/registration - Registration of User - POST
 ### Use to requests Postman or Swagger UI (Swagger requires authentication).
 
