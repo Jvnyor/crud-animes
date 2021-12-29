@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/swagger-ui.html").permitAll()
 				.antMatchers("/swagger-ui/**").permitAll()
 				.antMatchers("/v3/api-docs/swagger-config").permitAll()
+				.antMatchers("/v3/api-docs/swagger-config/**").permitAll()
 				.antMatchers("/api/v1/animes/admin/**").hasRole("ADMIN")
 				.antMatchers("/api/v1/animes/user/**").hasRole("USER")
 				.anyRequest()
