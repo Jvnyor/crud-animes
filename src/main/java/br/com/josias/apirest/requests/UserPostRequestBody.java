@@ -22,11 +22,6 @@ public class UserPostRequestBody {
 	@NotNull
 	private String lastName;
 	
-	@Schema(description = "Full name", example = "Fulano Silva", required = true)
-	@NotEmpty
-	@NotNull
-	private String fullName;
-	
 	@Schema(description = "Username", example = "fulano", required = true)
 	@NotEmpty
 	@NotNull
