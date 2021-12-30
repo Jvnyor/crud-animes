@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.josias.apirest.model.User;
 import br.com.josias.apirest.repository.UserRepository;
-import br.com.josias.apirest.requests.UserPostRequestBody;
+import br.com.josias.apirest.requests.UserDTO;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -47,19 +47,19 @@ public class UserService implements UserDetailsService {
 																"User not found"));
 	}
 	
-	public User save(UserPostRequestBody userPostRequestBody) {
+	public User save(UserDTO userDTO) {
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		
-		if (emailExist(userPostRequestBody.getEmail())) {
+		if (emailExist(userDTO.getEmail())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail already exists");
 		}
 		
 		return userRepository.save(User.builder()
-				.firstName(userPostRequestBody.getFirstName())
-				.lastName(userPostRequestBody.getLastName())
-				.email(userPostRequestBody.getEmail())
-				.password(passwordEncoder.encode(userPostRequestBody.getPassword()))
+				.firstName(userDTO.getFirstName())
+				.lastName(userDTO.getLastName())
+				.email(userDTO.getEmail())
+				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.authorities("ROLE_USER")
 				.build());
 		

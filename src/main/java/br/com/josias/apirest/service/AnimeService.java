@@ -11,8 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.josias.apirest.model.Anime;
 import br.com.josias.apirest.repository.AnimeRepository;
-import br.com.josias.apirest.requests.AnimePostRequestBody;
-import br.com.josias.apirest.requests.AnimePutRequestBody;
+import br.com.josias.apirest.requests.AnimeDTO;
 
 @Service
 public class AnimeService {
@@ -41,13 +40,14 @@ public class AnimeService {
 		return animeRepository.findByName(name);
 	}
 	
-	public Anime save(AnimePostRequestBody animePostRequestBody) {
-		return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+	public Anime save(AnimeDTO animeDTO) {
+		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
 	}
 	
-	public void replace(AnimePutRequestBody animePutRequestBody) {
-		Anime savedAnime = findById(animePutRequestBody.getId());
-		animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animePutRequestBody.getName()).build());
+	public Anime replace(Long id,AnimeDTO animeDTO) {
+		Anime savedAnime = animeRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).build());
 	}
 	
 	public void delete(Long id) {

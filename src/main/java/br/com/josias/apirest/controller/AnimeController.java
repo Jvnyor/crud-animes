@@ -2,7 +2,7 @@ package br.com.josias.apirest.controller;
 
 import java.util.List;
 
-import org.springdoc.api.annotations.ParameterObject;
+//import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,15 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.josias.apirest.model.Anime;
-import br.com.josias.apirest.requests.AnimePostRequestBody;
-import br.com.josias.apirest.requests.AnimePutRequestBody;
+import br.com.josias.apirest.requests.AnimeDTO;
 import br.com.josias.apirest.service.AnimeService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+//import io.swagger.v3.oas.annotations.Operation;
+//import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name="CRUD Animes")
-@RequestMapping("/api/v1/animes/user")
+//@Tag(name="CRUD Animes")
+@RequestMapping("/api/animes/user")
 public class AnimeController {
 
 	private AnimeService animeService;
@@ -38,20 +37,20 @@ public class AnimeController {
 	}
 
 	@GetMapping
-	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
-	tags = {"anime"})
-	public ResponseEntity<Page<Anime>> listAllAnimesPageable(@ParameterObject Pageable pageable) {
+//	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
+//	tags = {"anime"})
+	public ResponseEntity<Page<Anime>> listAllAnimesPageable(/*@ParameterObject*/ Pageable pageable) {
 		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 	
 	@GetMapping("/all")
-	@Operation(summary = "List all animes no paginated", description = "list of all animes",tags = {"anime"})
+//	@Operation(summary = "List all animes no paginated", description = "list of all animes",tags = {"anime"})
 	public ResponseEntity<List<Anime>> listAllAnimesNonPageable() {
 		return ResponseEntity.ok(animeService.listAllNonPageable());
 	}
 	
 	@GetMapping("/find")
-	@Operation(summary = "Find animes by name with request param", description = "find animes by name",tags = {"anime"})
+//	@Operation(summary = "Find animes by name with request param", description = "find animes by name",tags = {"anime"})
 	public ResponseEntity<List<Anime>> findAnimeByName(@RequestParam String name) {
 		return ResponseEntity.ok(animeService.findByName(name));
 	}
@@ -62,14 +61,13 @@ public class AnimeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Anime> createAnime(@RequestBody AnimePostRequestBody animePostRequestBody) {
-		return new ResponseEntity<>(animeService.save(animePostRequestBody),HttpStatus.CREATED);
+	public ResponseEntity<Anime> createAnime(@RequestBody AnimeDTO animeDTO) {
+		return new ResponseEntity<>(animeService.save(animeDTO),HttpStatus.CREATED);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Void> replaceAnime(@RequestBody AnimePutRequestBody animePutRequestBody) {
-		animeService.replace(animePutRequestBody);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	@PutMapping("/{id}")
+	public ResponseEntity<Anime> replaceAnime(@PathVariable Long id,@RequestBody AnimeDTO animeDTO) {
+		return ResponseEntity.ok(animeService.replace(id,animeDTO));
 	}
 	
 	@DeleteMapping("/{id}")

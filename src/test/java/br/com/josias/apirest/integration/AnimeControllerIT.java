@@ -30,7 +30,7 @@ import br.com.josias.apirest.model.Anime;
 import br.com.josias.apirest.model.User;
 import br.com.josias.apirest.repository.AnimeRepository;
 import br.com.josias.apirest.repository.UserRepository;
-import br.com.josias.apirest.requests.AnimePostRequestBody;
+import br.com.josias.apirest.requests.AnimeDTO;
 import br.com.josias.apirest.util.AnimeCreator;
 import br.com.josias.apirest.util.AnimePostRequestBodyCreator;
 import br.com.josias.apirest.wrapper.PageableResponse;
@@ -186,7 +186,7 @@ public class AnimeControllerIT {
 	@Test
     @DisplayName("createAnime returns anime when successful")
     void createAnime_ReturnsAnime_WhenSuccessful(){
-		AnimePostRequestBody animePostRequestBody = AnimePostRequestBodyCreator.createAnimePostRequestBody();
+		AnimeDTO animePostRequestBody = AnimePostRequestBodyCreator.createAnimePostRequestBody();
 		
 		userRepository.save(USER);
 		

@@ -1,7 +1,6 @@
 package br.com.josias.apirest.requests;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnimePutRequestBody {
+public class AnimeDTO {
 
 	@NotEmpty
-	@NotNull
-	private Long id;
-	@NotEmpty
-	@NotNull
 	private String name;
 }
