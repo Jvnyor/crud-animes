@@ -73,6 +73,6 @@ public class AnimeController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> removeAnime(@PathVariable Long id) {
 		animeService.delete(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

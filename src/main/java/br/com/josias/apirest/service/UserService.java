@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
 																"User not found"));
 	}
 	
-	public User save(UserDTO userDTO) {
+	public void save(UserDTO userDTO) {
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		
@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail already exists");
 		}
 		
-		return userRepository.save(User.builder()
+		userRepository.save(User.builder()
 				.firstName(userDTO.getFirstName())
 				.lastName(userDTO.getLastName())
 				.email(userDTO.getEmail())
@@ -65,26 +65,21 @@ public class UserService implements UserDetailsService {
 		
 	}
 	
-//	public void replace(UserPutRequestBody userPutRequestBody) {
-//		PasswordEncoder passwordEncoder = PasswordEncoderFactories
-//				.createDelegatingPasswordEncoder();
-//		
-//		if (!idToReplaceUser(userPutRequestBody.getId())) {
-//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not exists");
-//		} else if (idToReplaceUser(userPutRequestBody.getId()) && emailExist(userPutRequestBody.getEmail()) || usernameExist(userPutRequestBody.getUsername()) && passwordExist(userPutRequestBody.getPassword())) {
-//			User savedUser = findById(userPutRequestBody.getId());
-//			userRepository.save(User.builder()
-//					.id(savedUser.getId())
-//					.firstName(userPutRequestBody.getFirstName())
-//					.lastName(userPutRequestBody.getLastName())
-//					.password(passwordEncoder.encode(userPutRequestBody.getPassword()))
-//					.email(userPutRequestBody.getEmail())
-//					.build());
-//		}
+	public void replace(Long id,UserDTO userDTO) {
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories
+				.createDelegatingPasswordEncoder();
 		
+		User savedUser = userRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"User not exists"));
+		userRepository.save(User.builder()
+				.id(savedUser.getId())
+				.firstName(userDTO.getFirstName())
+				.lastName(userDTO.getLastName())
+				.password(passwordEncoder.encode(userDTO.getPassword()))
+				.email(userDTO.getEmail())
+				.build());
 		
-		
-//	}
+	}
 	
 	public void delete(Long id) {
 		userRepository.delete(findById(id));

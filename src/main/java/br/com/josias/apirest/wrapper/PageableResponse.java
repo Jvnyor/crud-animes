@@ -16,7 +16,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PageableResponse<T> extends PageImpl<T> {
-    private boolean first;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private boolean first;
     private boolean last;
     private int totalPages;
     private int numberOfElements;
