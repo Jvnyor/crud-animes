@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
 		return userRepository.findAll();
 	}
 	
-	public User findByEmail(String email) {
+	public User findByEmail(String email) throws ResponseStatusException {
 		return userRepository.findByEmail(email);
 	}
 	
@@ -81,13 +81,9 @@ public class UserService implements UserDetailsService {
 		
 	}
 	
-	public void delete(Long id) {
+	public void delete(Long id) throws ResponseStatusException {
 		userRepository.delete(findById(id));
 	}
-	
-//	private boolean idToReplaceUser(Long id) {
-//		return userRepository.findById(id) != null;
-//	}
 	
 	private boolean emailExist(String email) {
 		return userRepository.findByEmail(email) != null;
