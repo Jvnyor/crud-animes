@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.josias.animes.model.User;
 import br.com.josias.animes.requests.UserDTO;
 import br.com.josias.animes.service.UserService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
