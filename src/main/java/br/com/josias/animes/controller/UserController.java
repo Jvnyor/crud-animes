@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name="Registration users and control users information")
+@Tag(name="crud-users")
 @RequestMapping("/api/animes")
 public class UserController {
 

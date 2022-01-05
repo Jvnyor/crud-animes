@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name="CRUD Animes")
+@Tag(name="crud-animes")
 @RequestMapping("/api/animes/user")
 public class AnimeController {
 
