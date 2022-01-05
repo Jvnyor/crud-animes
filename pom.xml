@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.josias</groupId>
-	<artifactId>apirest</artifactId>
+	<artifactId>animes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>apirest</name>
-	<description>Demo project for Spring Boot</description>
+	<name>animes</name>
+	<description>CRUD of animes with authentication</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -29,7 +29,7 @@
 		</dependency>
 
 		<!-- DOCUMENTAÇÃO -->
-       <!--<dependency>
+       <dependency>
       		<groupId>org.springdoc</groupId>
       		<artifactId>springdoc-openapi-ui</artifactId>
       		<version>1.6.3</version>
@@ -38,7 +38,7 @@
       		<groupId>org.springdoc</groupId>
       		<artifactId>springdoc-openapi-webmvc-core</artifactId>
       		<version>1.6.3</version>
-   		</dependency>-->
+   		</dependency>
 		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -68,7 +68,7 @@
       		<scope>runtime</scope>
     	</dependency>
     	
-    	<!--<dependency>
+    	<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger2</artifactId>
 		    <version>2.7.0</version>
@@ -77,7 +77,7 @@
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger-ui</artifactId>
 		    <version>2.7.0</version>
-		</dependency>-->
+		</dependency>
 		
 		<dependency>
 	      <groupId>org.springframework.boot</groupId>
