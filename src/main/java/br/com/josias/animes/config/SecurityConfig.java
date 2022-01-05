@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/api/animes/registration").permitAll()
-				.antMatchers("/swagger-ui").permitAll()
+				.antMatchers("/swagger-ui/index.html#/CRUD Animes/**").permitAll()
 				.antMatchers("/api/animes/admin/**").hasRole("ADMIN")
 				.antMatchers("/api/animes/user/**").hasRole("USER")
 				.anyRequest()

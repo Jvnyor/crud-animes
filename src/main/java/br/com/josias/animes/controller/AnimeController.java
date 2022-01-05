@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.josias.animes.model.Anime;
 import br.com.josias.animes.requests.AnimeDTO;
 import br.com.josias.animes.service.AnimeService;
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-//@Tag(name="CRUD Animes")
+@Tag(name="CRUD Animes")
 @RequestMapping("/api/animes/user")
 public class AnimeController {
 
@@ -37,20 +37,20 @@ public class AnimeController {
 	}
 
 	@GetMapping
-//	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
-//	tags = {"anime"})
+	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
+	tags = {"anime"})
 	public ResponseEntity<Page<Anime>> listAllAnimesPageable(/*@ParameterObject*/ Pageable pageable) {
 		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 	
 	@GetMapping("/all")
-//	@Operation(summary = "List all animes no paginated", description = "list of all animes",tags = {"anime"})
+	@Operation(summary = "List all animes no paginated", description = "list of all animes",tags = {"anime"})
 	public ResponseEntity<List<Anime>> listAllAnimesNonPageable() {
 		return ResponseEntity.ok(animeService.listAllNonPageable());
 	}
 	
 	@GetMapping("/find")
-//	@Operation(summary = "Find animes by name with request param", description = "find animes by name",tags = {"anime"})
+	@Operation(summary = "Find animes by name with request param", description = "find animes by name",tags = {"anime"})
 	public ResponseEntity<List<Anime>> findAnimeByName(@RequestParam String name) {
 		return ResponseEntity.ok(animeService.findByName(name));
 	}
