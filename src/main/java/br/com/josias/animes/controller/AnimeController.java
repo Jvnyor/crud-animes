@@ -2,6 +2,7 @@ package br.com.josias.animes.controller;
 
 import java.util.List;
 
+import org.springdoc.api.annotations.ParameterObject;
 //import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class AnimeController {
 	@GetMapping
 	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
 	tags = {"anime"})
-	public ResponseEntity<Page<Anime>> listAllAnimesPageable(/*@ParameterObject*/ Pageable pageable) {
+	public ResponseEntity<Page<Anime>> listAllAnimesPageable(@ParameterObject Pageable pageable) {
 		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 	

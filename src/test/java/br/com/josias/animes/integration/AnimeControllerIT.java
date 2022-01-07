@@ -60,18 +60,18 @@ public class AnimeControllerIT {
 	private static final User USER = User.builder()
 			.firstName("teste")
 			.lastName("teste")
-			.email("test_user@gmail.com")
+			.username("user")
 			.password(passwordEncoder.encode("password"))
 			.authorities(String.valueOf(UserRole.USER))
 			.build();
 	
-//	private static final User ADMIN = User.builder()
-//			.firstName("teste")
-//			.lastName("teste")
-//			.email("test_admin@gmail.com")
-//			.password(passwordEncoder.encode("password"))
-//			.authorities(String.valueOf(UserRole.ADMIN))
-//			.build();
+	private static final User ADMIN = User.builder()
+			.firstName("teste")
+			.lastName("teste")
+			.username("admin")
+			.password(passwordEncoder.encode("password"))
+			.authorities(String.valueOf(UserRole.ADMIN))
+			.build();
 	
 	@TestConfiguration
 	@Lazy
@@ -80,14 +80,14 @@ public class AnimeControllerIT {
 		public TestRestTemplate testRestTemplateRoleUserCreator(@Value("${local.server.port}") int port) {
 			RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
 					.rootUri("http://localhost:"+port)
-					.basicAuthentication("test_user@gmail.com", "password");
+					.basicAuthentication("user", "password");
 			return new TestRestTemplate(restTemplateBuilder);
 		}
 		@Bean(name = "testRestTemplateRoleAdmin")
 		public TestRestTemplate testRestTemplateRoleAdminCreator(@Value("${local.server.port}") int port) {
 			RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
 					.rootUri("http://localhost:"+port)
-					.basicAuthentication("test_admin@gmail.com", "password");
+					.basicAuthentication("admin", "password");
 			return new TestRestTemplate(restTemplateBuilder);
 		}
 	}

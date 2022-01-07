@@ -1,5 +1,6 @@
 package br.com.josias.animes.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,27 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/swagger-ui.html").permitAll()
-				.antMatchers("/swagger-ui/**.js").permitAll()
-				.antMatchers("/swagger-ui/**.js.map").permitAll()
-				.antMatchers("/swagger-ui/**.html").permitAll()
-				.antMatchers("/swagger-ui/**.css").permitAll()
-				.antMatchers("/swagger-ui/**.css.map").permitAll()
-				.antMatchers("/swagger-ui/webpack/**").permitAll()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/swagger-ui/index.html").permitAll()
-				.antMatchers("/swagger-ui/index.html#/").permitAll()
-				.antMatchers("/v3/api-docs/**").permitAll()
-				.antMatchers("/api/animes/registration").permitAll()
-				.antMatchers("/api/animes/admin/**").hasRole("ADMIN")
-				.antMatchers("/api/animes/user/**").hasRole("USER")
-				.antMatchers("/swagger-ui/index.html#/crud-users/createUser").permitAll()
-				.antMatchers("/swagger-ui/index.html#/crud-animes/**").hasRole("USER")
-				.antMatchers("/swagger-ui/index.html#/crud-users/listAllUsers").hasRole("ADMIN")
-				.antMatchers("/swagger-ui/index.html#/crud-users/findUserById").hasRole("ADMIN")
-				.antMatchers("/swagger-ui/index.html#/crud-users/removeUser").hasRole("ADMIN")
-				.antMatchers("/swagger-ui/index.html#/crud-users/replace").hasRole("ADMIN")
-				
+				.antMatchers("/register").permitAll()
+				.antMatchers(HttpMethod.POST,"/api/animes/registration").permitAll()
+				.antMatchers(HttpMethod.GET,"/api/animes/admin/").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET,"/api/animes/admin/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST,"/api/animes/admin/").hasRole("ADMIN")
+				.antMatchers(HttpMethod.PUT,"/api/animes/admin/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET,"/api/animes/user").hasRole("USER")
+				.antMatchers(HttpMethod.GET,"/api/animes/user/**").hasRole("USER")
+				.antMatchers(HttpMethod.POST,"/api/animes/user").hasRole("USER")
+				.antMatchers(HttpMethod.PUT,"/api/animes/user/**").hasRole("USER")
+				.antMatchers(HttpMethod.DELETE,"/api/animes/user/**").hasRole("USER")
 				.and()
 				.authorizeRequests()
 				.anyRequest()
