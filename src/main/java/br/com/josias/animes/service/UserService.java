@@ -28,18 +28,18 @@ public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return Optional.ofNullable(userRepository.findByEmail(email))
-							.orElseThrow(() -> new UsernameNotFoundException("E-mail not found"));
+		return Optional.ofNullable(userRepository.findByUsername(username))
+							.orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 	}
 	
 	public List<User> listAll() {
 		return userRepository.findAll();
 	}
 	
-	public User findByEmail(String email) throws ResponseStatusException {
-		return userRepository.findByEmail(email);
+	public User findByUsername(String username) throws ResponseStatusException {
+		return userRepository.findByUsername(username);
 	}
 	
 	public User findById(Long id) {
@@ -52,14 +52,14 @@ public class UserService implements UserDetailsService {
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		
-		if (emailExist(userDTO.getEmail())) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail already exists");
+		if (usernameExist(userDTO.getUsername())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
 		}
 		
 		userRepository.save(User.builder()
 				.firstName(userDTO.getFirstName())
 				.lastName(userDTO.getLastName())
-				.email(userDTO.getEmail())
+				.username(userDTO.getUsername())
 				.password(passwordEncoder.encode(userDTO.getPassword()))
 				.authorities(String.valueOf(UserRole.USER))
 				.build());
@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
 				.firstName(userDTO.getFirstName())
 				.lastName(userDTO.getLastName())
 				.password(passwordEncoder.encode(userDTO.getPassword()))
-				.email(userDTO.getEmail())
+				.username(userDTO.getUsername())
 				.build());
 		
 	}
@@ -86,8 +86,8 @@ public class UserService implements UserDetailsService {
 		userRepository.delete(findById(id));
 	}
 	
-	private boolean emailExist(String email) {
-		return userRepository.findByEmail(email) != null;
+	private boolean usernameExist(String username) {
+		return userRepository.findByUsername(username) != null;
 	}
 	
 

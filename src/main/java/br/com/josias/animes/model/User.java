@@ -38,7 +38,7 @@ public class User implements UserDetails {
 	
 	private String lastName;
 	
-	private String email;
+	private String username;
 	
 	private String password;
 	
@@ -55,7 +55,7 @@ public class User implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return email;
+		return username;
 	}
 
 	@Override
