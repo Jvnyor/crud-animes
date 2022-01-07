@@ -14,6 +14,19 @@ http://localhost:8080/ - URL Tomcat server
 
 /registration - Registration of User - POST
 
+### CURL
+
+```
+curl --location --request POST 'localhost:8080/registration' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstName": "FirstName",
+    "lastName": "LastName",
+    "USERNAME": "Username",
+    "password": "password"
+}'
+```
+
 /login - Login page - GET
 
 ### API of animes requests
