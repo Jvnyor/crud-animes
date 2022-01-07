@@ -22,7 +22,7 @@ curl --location --request POST 'localhost:8080/registration' \
 --data-raw '{
     "firstName": "FirstName",
     "lastName": "LastName",
-    "USERNAME": "Username",
+    "username": "user",
     "password": "password"
 }'
 ```
