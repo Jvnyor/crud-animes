@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name="crud-users")
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/admin")
 public class UserController {
 
 	@Autowired
