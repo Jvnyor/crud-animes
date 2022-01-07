@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @Tag(name="user-registration")
 @RequiredArgsConstructor
-@RequestMapping("/api/animes")
 public class UserRegistrationController {
 
 	private final UserService userService;
