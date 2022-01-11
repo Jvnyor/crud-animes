@@ -32,7 +32,7 @@ import br.com.josias.animes.wrapper.PageableResponse;
 public class AnimeControllerIT {
 
 	@Autowired
-	@Qualifier(value = "testRestTemplateRoleUser")
+	@Qualifier(value = "testRestTemplate")
 	private TestRestTemplate testRestTemplate;
 	
 	@Autowired
