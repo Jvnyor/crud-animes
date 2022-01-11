@@ -10,13 +10,10 @@
 
 http://localhost:8080/ - URL Tomcat server
 
-#### JSON:
+#### JSON POST Method:
 ```
 {
-    "firstName":"Firstname",
-    "lastName":"Lastname",
-    "username":"user",
-    "password":"password"
+    "name":"Death Note"
 }
 ```
 
