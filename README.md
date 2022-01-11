@@ -21,6 +21,8 @@ http://localhost:8080/ - URL Tomcat server
 
 /api/animes - Return list paginated of all Animes - GET 
 
+/api/animes - Create a Anime - POST
+
 /api/animes/all - Return list of all Animes - GET 
 
 /api/animes/{id} - Replace a Anime by Id - PUT
