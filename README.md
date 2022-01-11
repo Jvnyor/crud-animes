@@ -22,7 +22,24 @@ http://localhost:8080/ - URL Tomcat server
 
 #### Path's:
 
+<<<<<<< HEAD
 /api/animes - Return list paginated of all Animes - GET 
+=======
+### CURL
+
+```
+curl --location --request POST 'localhost:8080/registration' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstName": "FirstName",
+    "lastName": "LastName",
+    "username": "user",
+    "password": "password"
+}'
+```
+
+/login - Login page - GET
+>>>>>>> 195e13f46aa70a59eb66fba6e85651716bd827f5
 
 /api/animes/all - Return list of all Animes - GET 
 
