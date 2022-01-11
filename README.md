@@ -1,4 +1,4 @@
-# Rest API to create Animes list and register Users for authentication with Spring Boot
+# Rest API to create Animes
 
 ## Database MySQL User Root
 - Username: root
@@ -10,34 +10,28 @@
 
 http://localhost:8080/ - URL Tomcat server
 
-### Requests authentication
+#### JSON:
+```
+{
+    "firstName":"Firstname",
+    "lastName":"Lastname",
+    "username":"user",
+    "password":"password"
+}
+```
 
-/registration - Registration of User - POST
+#### Path's:
 
-/login - Login page - GET
+/api/animes - Return list paginated of all Animes - GET 
 
-### API of animes requests
+/api/animes/all - Return list of all Animes - GET 
 
-/api/animes/user/ - Return list paginated of all Animes - GET 
+/api/animes/{id} - Replace a Anime by Id - PUT
 
-/api/animes/user/all - Return list of all Animes - GET 
+/api/animes/{id} - Return a Anime by Id - GET
 
-/api/animes/user/{id} - Replace a Anime by Id - PUT
+/api/animes/find?name={name} - Return a Anime by name - GET
 
-/api/animes/user/{id} - Return a Anime by Id - GET
+/api/animes/{id} - Delete Anime by Id - DELETE
 
-/api/animes/user/find?name={name} - Return a Anime by name - GET
-
-/api/animes/user/{id} - Delete Anime by Id - DELETE
-
-### API of users requests
-
-/api/users/admin/ - GET
-
-/api/users/admin/{id} - GET
-
-/api/users/admin/{id} - DELETE
-
-/api/users/admin/{id} - PUT
-
-### Use to requests Postman or Swagger UI (Swagger requires authentication).
+### Use to requests Postman or Swagger UI.
