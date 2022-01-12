@@ -7,10 +7,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -37,6 +42,17 @@ public class AnimeControllerIT {
 	
 	@Autowired
 	private AnimeRepository animeRepository;
+	
+	@TestConfiguration
+	@Lazy
+	static class Config {
+		@Bean(name = "testRestTemplate")
+		public TestRestTemplate testRestTemplateCreator(@Value("${local.server.port}") int port) {
+			RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
+					.rootUri("http://localhost:"+port);
+			return new TestRestTemplate(restTemplateBuilder);
+		}
+	}
 	
 	@Test
 	@DisplayName("listAllAnimesPageable returns list of anime inside page object succesful")
@@ -79,13 +95,13 @@ public class AnimeControllerIT {
     void findAnimeById_ReturnsAnime_WhenSuccessful(){
 		Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		
-        Long expectedId = savedAnime.getId();
+        Long id = savedAnime.getId();
 
-        Anime anime = testRestTemplate.getForObject("/api/animes/{id}", Anime.class, expectedId);
+        Anime anime = testRestTemplate.getForObject("/api/animes/{id}", Anime.class, id);
 
         Assertions.assertThat(anime).isNotNull();
 
-        Assertions.assertThat(anime.getId()).isNotNull().isEqualTo(expectedId);
+        Assertions.assertThat(anime.getId()).isNotNull().isEqualTo(id);
     }
 	
 	@Test
@@ -141,11 +157,13 @@ public class AnimeControllerIT {
 		
 		savedAnime.setName("Boku no Hero");
 		
+		Long id = savedAnime.getId();
+		
         ResponseEntity<Void> animeResponseEntity = testRestTemplate.exchange("/api/animes/{id}",
         		HttpMethod.PUT,
         		new HttpEntity<>(savedAnime),
         		Void.class,
-        		savedAnime.getId());
+        		id);
         
         Assertions.assertThat(animeResponseEntity).isNotNull();
         Assertions.assertThat(animeResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -157,8 +175,10 @@ public class AnimeControllerIT {
     void removeAnime_RemovesAnime_WhenSuccessful() {
         Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 
+        Long id = savedAnime.getId();
+        
         ResponseEntity<Void> animeResponseEntity = testRestTemplate.exchange("/api/animes/{id}",
-                HttpMethod.DELETE, null, Void.class, savedAnime.getId());
+                HttpMethod.DELETE, null, Void.class, id);
 
         Assertions.assertThat(animeResponseEntity).isNotNull();
 
