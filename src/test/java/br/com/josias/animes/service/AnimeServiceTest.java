@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.josias.animes.exception.BadRequestException;
 import br.com.josias.animes.model.Anime;
 import br.com.josias.animes.repository.AnimeRepository;
 import br.com.josias.animes.util.AnimeCreator;
@@ -82,11 +83,11 @@ class AnimeServiceTest {
 	}
 	
 	@Test
-    @DisplayName("findById returns anime when successful")
-    void findById_ReturnsAnime_WhenSuccessful(){
+    @DisplayName("findByIdOrThrowBadRequestException returns anime when successful")
+    void findByIdOrThrowBadRequestException_ReturnsAnime_WhenSuccessful(){
         Long expectedId = AnimeCreator.createValidAnime().getId();
 
-        Anime anime = animeService.findById(1L);
+        Anime anime = animeService.findByIdOrThrowBadRequestException(1L);
 
         Assertions.assertThat(anime).isNotNull();
 
@@ -94,13 +95,13 @@ class AnimeServiceTest {
     }
 	
 	@Test
-    @DisplayName("findById throws ResponseStatusException when anime is not found")
-    void findById_ThrowsResponseStatusException_WhenAnimeIsNotFound(){
+    @DisplayName("findByIdOrThrowBadRequestException throws BadRequestException when anime is not found")
+    void findByIdOrThrowBadRequestException_ThrowsBadRequestException_WhenAnimeIsNotFound(){
 		BDDMockito.when(animeRepositoryMock.findById(ArgumentMatchers.anyLong()))
         .thenReturn(Optional.empty());
 		
-		Assertions.assertThatExceptionOfType(ResponseStatusException.class)
-		.isThrownBy(() -> animeService.findById(1L));
+		Assertions.assertThatExceptionOfType(BadRequestException.class)
+		.isThrownBy(() -> animeService.findByIdOrThrowBadRequestException(1L));
     }
 	
 	@Test
