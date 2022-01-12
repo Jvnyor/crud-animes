@@ -1,14 +1,8 @@
 # Rest API to create Animes
 
-## Database MySQL User Root
-- Username: root
-- Password: root
-
-*src/main/resources/aplications.properties*
-
 ## Requests
 
-http://localhost:8080/ - URL Tomcat server
+https://crud-animes.herokuapp.com/ - URL
 
 #### JSON POST Method:
 ```
@@ -33,7 +27,7 @@ http://localhost:8080/ - URL Tomcat server
 
 /api/animes/{id} - Delete Anime by Id - DELETE
 
-### Use to requests Postman or Swagger UI.
+### Use to requests Postman or Swagger UI (in production).
 
 ## Tests
 
