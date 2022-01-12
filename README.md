@@ -34,3 +34,9 @@ http://localhost:8080/ - URL Tomcat server
 /api/animes/{id} - Delete Anime by Id - DELETE
 
 ### Use to requests Postman or Swagger UI.
+
+## Tests
+
+#### Unit Tests and Integration tests
+
+*src/main/test/java/br/com/josias/animes/*
