@@ -55,8 +55,8 @@ public class AnimeControllerIT {
 	}
 	
 	@Test
-	@DisplayName("listAllAnimesPageable returns list of anime inside page object succesful")
-	void listAllAnimesPageable_ReturnsListOfAnimesInsidePageObject_WhenSuccesful() {
+	@DisplayName("listAllPageable returns list of anime inside page object succesful")
+	void listAllPageable_ReturnsListOfAnimesInsidePageObject_WhenSuccesful() {
 		Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		String expectName = savedAnime.getName();
 		
@@ -72,8 +72,8 @@ public class AnimeControllerIT {
 	}
 	
 	@Test
-    @DisplayName("listAllAnimesNonPageable returns list of animes when successful")
-    void listAllAnimesNonPageable_ReturnsListOfAnimes_WhenSuccessful() {
+    @DisplayName("listAllNonPageable returns list of animes when successful")
+    void listAllNonPageable_ReturnsListOfAnimes_WhenSuccessful() {
         Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
         
         String expectedName = savedAnime.getName();
@@ -91,8 +91,8 @@ public class AnimeControllerIT {
     }
 
 	@Test
-    @DisplayName("findAnimeById returns anime when successful")
-    void findAnimeById_ReturnsAnime_WhenSuccessful(){
+    @DisplayName("findById returns anime when successful")
+    void findById_ReturnsAnime_WhenSuccessful(){
 		Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		
         Long id = savedAnime.getId();
@@ -105,8 +105,8 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("findAnimeByName returns list of anime when successful")
-    void findAnimeByName_ReturnsListOfAnime_WhenSuccessful(){
+    @DisplayName("findByName returns list of anime when successful")
+    void findByName_ReturnsListOfAnime_WhenSuccessful(){
 		animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		
 		String expectName = AnimeCreator.createValidAnime().getName();
@@ -124,8 +124,8 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("findAnimeByName returns an empty list of anime when anime is not found")
-    void findAnimeByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
+    @DisplayName("findByName returns an empty list of anime when anime is not found")
+    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
 		
 		List<Anime> animes = testRestTemplate.exchange("/api/animes/find?name=dbz", HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Anime>>(){
@@ -138,8 +138,8 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("createAnime returns anime when successful")
-    void createAnime_ReturnsAnime_WhenSuccessful(){
+    @DisplayName("save returns anime when successful")
+    void save_ReturnsAnime_WhenSuccessful(){
 		AnimeDTO animeDTO = AnimeDTOCreator.createAnimeDTO();
 		
         ResponseEntity<Anime> animeResponseEntity = testRestTemplate.postForEntity("/api/animes", animeDTO, Anime.class);
@@ -151,8 +151,8 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("replaceAnime updates anime when successful")
-    void replaceAnime_UpdatesAnime_WhenSuccessful(){
+    @DisplayName("replace updates anime when successful")
+    void replace_UpdatesAnime_WhenSuccessful(){
 		Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		
 		savedAnime.setName("Boku no Hero");
@@ -171,8 +171,8 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("removeAnime removes anime when successful")
-    void removeAnime_RemovesAnime_WhenSuccessful() {
+    @DisplayName("remove removes anime when successful")
+    void remove_RemovesAnime_WhenSuccessful() {
         Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 
         Long id = savedAnime.getId();

@@ -2,6 +2,8 @@ package br.com.josias.animes.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.josias.animes.exception.BadRequestException;
 import br.com.josias.animes.model.Anime;
 import br.com.josias.animes.repository.AnimeRepository;
 import br.com.josias.animes.requests.AnimeDTO;
@@ -31,15 +34,16 @@ public class AnimeService {
 		return animeRepository.findAll();
 	}
 	
-	public Anime findById(Long id) {
+	public Anime findByIdOrThrowBadRequestException(Long id) {
 		return animeRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+				.orElseThrow(() -> new BadRequestException("Anime not found"));
 	}
 	
 	public List<Anime> findByName(String name) {
 		return animeRepository.findByName(name);
 	}
 	
+	@Transactional
 	public Anime save(AnimeDTO animeDTO) {
 		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
 	}
@@ -51,6 +55,6 @@ public class AnimeService {
 	}
 	
 	public void delete(Long id) {
-		animeRepository.delete(findById(id));
+		animeRepository.delete(findByIdOrThrowBadRequestException(id));
 	}
 }
