@@ -17,8 +17,8 @@ public class AnimesApplication {
 
 	@GetMapping
 	public String home() {
-		return "<h1>API Animes</h1>"
-				+ "<a href='https://crud-animes.herokuapp.com/swagger-ui.html'>Endpoints Swagger UI</a>";
+		return "<h1 align='center'>API Animes</h1>"
+				+ "<a align='center' href='https://crud-animes.herokuapp.com/swagger-ui.html'>Endpoints Swagger UI</a>";
 	}
 	
 }
