@@ -1,5 +1,6 @@
 package br.com.josias.animes.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,9 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.com.josias.animes.exception.BadRequestException;
 import br.com.josias.animes.model.Anime;
@@ -45,13 +44,12 @@ public class AnimeService {
 	
 	@Transactional
 	public Anime save(AnimeDTO animeDTO) {
-		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
+		return animeRepository.save(Anime.builder().name(animeDTO.getName()).createdAt(new Date()).build());
 	}
 	
 	public Anime replace(Long id,AnimeDTO animeDTO) {
-		Anime savedAnime = animeRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).build());
+		Anime savedAnime = findByIdOrThrowBadRequestException(id);
+		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).createdAt(new Date()).build());
 	}
 	
 	public void delete(Long id) {

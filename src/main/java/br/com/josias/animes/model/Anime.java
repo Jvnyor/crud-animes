@@ -1,5 +1,7 @@
 package br.com.josias.animes.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,5 +27,6 @@ public class Anime {
 	@NotEmpty
 	@Size(min = 3,max = 50)
 	private String name;
+	private Date createdAt;
 	
 }
