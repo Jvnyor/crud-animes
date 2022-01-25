@@ -2,12 +2,7 @@ package br.com.josias.animes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/")
 @SpringBootApplication
 public class AnimesApplication {
 
@@ -15,12 +10,4 @@ public class AnimesApplication {
 		SpringApplication.run(AnimesApplication.class, args);
 	}
 
-	@GetMapping
-	public String home() {
-		return "<div align='center'>"
-			+"<h1>API Animes</h1>"
-			+"<a href='https://crud-animes.herokuapp.com/swagger-ui.html'>Endpoints Swagger UI</a>"
-			+"</div>";
-	}
-	
 }
