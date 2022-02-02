@@ -1,5 +1,6 @@
 package br.com.josias.animes.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +30,8 @@ public class Anime {
 	@NotEmpty
 	@Size(min = 3,max = 50)
 	private String name;
-	private Date createdAt;
+	
+	@DateTimeFormat(pattern = "yyy-MM-dd HH:mm:ss")
+	private String createdAt;
 	
 }

@@ -35,12 +35,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins="*")
 public class AnimeController {
 
-	private AnimeService animeService;
-	
 	@Autowired
-	public AnimeController(AnimeService animeService) {
-		this.animeService = animeService;
-	}
+	private AnimeService animeService;
 
 	@GetMapping
 	@ApiResponses(value = {

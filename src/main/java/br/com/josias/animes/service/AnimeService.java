@@ -1,6 +1,6 @@
 package br.com.josias.animes.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,16 +14,13 @@ import br.com.josias.animes.exception.BadRequestException;
 import br.com.josias.animes.model.Anime;
 import br.com.josias.animes.repository.AnimeRepository;
 import br.com.josias.animes.requests.AnimeDTO;
+import br.com.josias.animes.util.DateUtil;
 
 @Service
 public class AnimeService {
 
-	private AnimeRepository animeRepository;
-	
 	@Autowired
-	public AnimeService(AnimeRepository animeRepository) {
-		this.animeRepository = animeRepository;
-	}
+	private AnimeRepository animeRepository;
 
 	public Page<Anime> listAllPageable(Pageable pageable) {
 		return animeRepository.findAll(pageable);
@@ -44,12 +41,12 @@ public class AnimeService {
 	
 	@Transactional
 	public Anime save(AnimeDTO animeDTO) {
-		return animeRepository.save(Anime.builder().name(animeDTO.getName()).createdAt(new Date()).build());
+		return animeRepository.save(Anime.builder().name(animeDTO.getName()).createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())).build());
 	}
 	
 	public Anime replace(Long id,AnimeDTO animeDTO) {
 		Anime savedAnime = findByIdOrThrowBadRequestException(id);
-		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).createdAt(new Date()).build());
+		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())).build());
 	}
 	
 	public void delete(Long id) {
