@@ -40,7 +40,7 @@ public class AnimeController {
 
 	@GetMapping
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime List Paginated Does Exist in The Database")
 	})
 	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
@@ -52,7 +52,7 @@ public class AnimeController {
 	
 	@GetMapping("/all")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Animes List Does Exist in The Database")
 	})
 	@Operation(summary = "List all animes no paginated", description = "paginated list",tags = {"anime"})
@@ -62,7 +62,7 @@ public class AnimeController {
 	
 	@GetMapping("/find")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
 	})
 	@Operation(summary = "Find animes with request param name", description = "animes by name",tags = {"anime"})
@@ -72,7 +72,7 @@ public class AnimeController {
 	
 	@GetMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
 	})
 	@Operation(summary = "Find animes with path variable id",description = "anime by id",tags = {"anime"})
@@ -82,7 +82,7 @@ public class AnimeController {
 	
 	@PostMapping
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "201", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime body is not valid")
 	})
 	@Operation(summary = "Create animes with request body",description = "animes saving",tags = {"anime"})
@@ -92,7 +92,7 @@ public class AnimeController {
 	
 	@PutMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
 	})
 	@Operation(summary = "Replace animes with request body using path variable id",description = "animes replacing",tags = {"anime"})
@@ -102,7 +102,7 @@ public class AnimeController {
 	
 	@DeleteMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "204", description = "Successful Operation"),
+			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
 	})
 	@Operation(summary = "Removes anime with path variable id",description = "animes deletions",tags = {"anime"})
