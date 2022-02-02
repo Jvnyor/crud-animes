@@ -2,7 +2,9 @@
 
 ## Requests
 
-https://crud-animes.herokuapp.com/ - URL
+https://crud-animes.herokuapp.com/api/animes - URL
+
+https://crud-animes.herokuapp.com/swagger-ui.html - Swagger UI (API Documentation)
 
 #### JSON POST Method:
 ```
