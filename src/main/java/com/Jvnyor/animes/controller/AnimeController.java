@@ -24,8 +24,6 @@ import com.Jvnyor.animes.requests.AnimeDTO;
 import com.Jvnyor.animes.service.AnimeService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -38,10 +36,6 @@ public class AnimeController {
 	private AnimeService animeService;
 
 	@GetMapping
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime List Paginated Does Exist in The Database")
-	})
 	@Operation(summary = "List all animes paginated", description = "The default size is 20, use the parameter size to change the default value",
 	tags = {"anime"})
 	public ResponseEntity<Page<Anime>> listAllPageable(@ParameterObject Pageable pageable) {
@@ -49,50 +43,30 @@ public class AnimeController {
 	}
 	
 	@GetMapping("/find")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
-	})
 	@Operation(summary = "Find animes with request param name", description = "animes by name",tags = {"anime"})
 	public ResponseEntity<Page<Anime>> findByName(@RequestParam String name, Pageable pageable) {
 		return ResponseEntity.ok(animeService.findByName(name, pageable));
 	}
 	
 	@GetMapping("/{id}")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
-	})
 	@Operation(summary = "Find animes with path variable id",description = "anime by id",tags = {"anime"})
 	public ResponseEntity<Anime> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
 	}
 	
 	@PostMapping
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime body is not valid")
-	})
 	@Operation(summary = "Create animes with request body",description = "animes saving",tags = {"anime"})
 	public ResponseEntity<Anime> save(@RequestBody @Valid AnimeDTO animeDTO) {
 		return new ResponseEntity<>(animeService.save(animeDTO),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
-	})
 	@Operation(summary = "Replace animes with request body using path variable id",description = "animes replacing",tags = {"anime"})
 	public ResponseEntity<Anime> replace(@PathVariable Long id,@RequestBody AnimeDTO animeDTO) {
 		return ResponseEntity.ok(animeService.replace(id, animeDTO));
 	}
 	
 	@DeleteMapping("/{id}")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
-	})
 	@Operation(summary = "Removes anime with path variable id",description = "animes deletions",tags = {"anime"})
 	public ResponseEntity<Void> remove(@PathVariable Long id) {
 		animeService.delete(id);
