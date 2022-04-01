@@ -1,7 +1,5 @@
 package com.Jvnyor.animes.integration;
 
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +15,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -70,25 +69,6 @@ public class AnimeControllerIT {
 			.hasSize(1);
 		Assertions.assertThat(animePage.toList().get(0).getName()).isEqualTo(expectName);
 	}
-	
-	@Test
-    @DisplayName("listAllNonPageable returns list of animes when successful")
-    void listAllNonPageable_ReturnsListOfAnimes_WhenSuccessful() {
-        Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
-        
-        String expectedName = savedAnime.getName();
-
-        List<Anime> animes = testRestTemplate.exchange("/api/animes/all", HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Anime>>() {
-                }).getBody();
-
-        Assertions.assertThat(animes)
-                .isNotNull()
-                .isNotEmpty()
-                .hasSize(1);
-
-        Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
-    }
 
 	@Test
     @DisplayName("findById returns anime when successful")
@@ -105,14 +85,14 @@ public class AnimeControllerIT {
     }
 	
 	@Test
-    @DisplayName("findByName returns list of anime when successful")
-    void findByName_ReturnsListOfAnime_WhenSuccessful(){
+    @DisplayName("findByName returns page list of anime when successful")
+    void findByName_ReturnsPageListOfAnime_WhenSuccessful(){
 		animeRepository.save(AnimeCreator.createAnimeToBeSaved());
 		
 		String expectName = AnimeCreator.createValidAnime().getName();
 		String url = String.format("/api/animes/find?name=%s", expectName);
-		List<Anime> animes = testRestTemplate.exchange(url, HttpMethod.GET, null,
-				new ParameterizedTypeReference<List<Anime>>(){
+		Page<Anime> animes = testRestTemplate.exchange(url, HttpMethod.GET, null,
+				new ParameterizedTypeReference<PageableResponse<Anime>>(){
 		}).getBody();
 		
 		Assertions.assertThat(animes)
@@ -120,15 +100,15 @@ public class AnimeControllerIT {
 				.isNotEmpty()
 				.hasSize(1);
 		
-		Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectName);
+		Assertions.assertThat(animes.toList().get(0).getName()).isEqualTo(expectName);
     }
 	
 	@Test
-    @DisplayName("findByName returns an empty list of anime when anime is not found")
-    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
+    @DisplayName("findByName returns an empty page list of anime when anime is not found")
+    void findByName_ReturnsEmptyPageListOfAnime_WhenAnimeIsNotFound(){
 		
-		List<Anime> animes = testRestTemplate.exchange("/api/animes/find?name=dbz", HttpMethod.GET, null,
-				new ParameterizedTypeReference<List<Anime>>(){
+		Page<Anime> animes = testRestTemplate.exchange("/api/animes/find?name=dbz", HttpMethod.GET, null,
+				new ParameterizedTypeReference<PageableResponse<Anime>>(){
 		}).getBody();
 		
 		Assertions.assertThat(animes)

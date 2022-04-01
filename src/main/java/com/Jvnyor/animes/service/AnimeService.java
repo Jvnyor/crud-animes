@@ -1,7 +1,6 @@
 package com.Jvnyor.animes.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -26,27 +25,30 @@ public class AnimeService {
 		return animeRepository.findAll(pageable);
 	}
 	
-	public List<Anime> listAllNonPageable() {
-		return animeRepository.findAll();
-	}
-	
 	public Anime findByIdOrThrowBadRequestException(Long id) {
 		return animeRepository.findById(id)
 				.orElseThrow(() -> new BadRequestException("Anime not found"));
 	}
 	
-	public List<Anime> findByName(String name) {
-		return animeRepository.findByName(name);
+	public Page<Anime> findByName(String name, Pageable pageable) {
+		return animeRepository.findByName(name, pageable);
 	}
 	
 	@Transactional
 	public Anime save(AnimeDTO animeDTO) {
-		return animeRepository.save(Anime.builder().name(animeDTO.getName()).createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())).build());
+		return animeRepository.save(Anime.builder()
+				.name(animeDTO.getName())
+				.createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()))
+				.build());
 	}
 	
-	public Anime replace(Long id,AnimeDTO animeDTO) {
+	public Anime replace(Long id, AnimeDTO animeDTO) {
 		Anime savedAnime = findByIdOrThrowBadRequestException(id);
-		return animeRepository.save(Anime.builder().id(savedAnime.getId()).name(animeDTO.getName()).createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())).build());
+		return animeRepository.save(Anime.builder()
+				.id(savedAnime.getId())
+				.name(animeDTO.getName())
+				.createdAt(DateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()))
+				.build());
 	}
 	
 	public void delete(Long id) {

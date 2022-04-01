@@ -1,6 +1,5 @@
 package com.Jvnyor.animes.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -14,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,15 +38,12 @@ class AnimeControllerTest {
 		PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));
 		BDDMockito.when(animeServiceMock.listAllPageable(ArgumentMatchers.any()))
 			.thenReturn(animePage);
-			
-		BDDMockito.when(animeServiceMock.listAllNonPageable())
-		.thenReturn(List.of(AnimeCreator.createValidAnime()));
 		
 		BDDMockito.when(animeServiceMock.findByIdOrThrowBadRequestException(ArgumentMatchers.anyLong()))
         .thenReturn(AnimeCreator.createValidAnime());
 		
-		BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
-        .thenReturn(List.of(AnimeCreator.createValidAnime()));
+		BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString(), ArgumentMatchers.any()))
+        .thenReturn(animePage);
 		
 		BDDMockito.when(animeServiceMock.save(ArgumentMatchers.any(AnimeDTO.class)))
         .thenReturn(AnimeCreator.createValidAnime());
@@ -69,20 +66,6 @@ class AnimeControllerTest {
 			.hasSize(1);
 		Assertions.assertThat(animePage.toList().get(0).getName()).isEqualTo(expectName);
 	}
-	
-	@Test
-	@DisplayName("listAllNonPageable returns list of anime inside page object succesful")
-	void listAllNonPageable_ReturnsListOfAnimes_WhenSuccesful() {
-		String expectName = AnimeCreator.createValidAnime().getName();
-		List<Anime> animes = animeController.listAllNonPageable().getBody();
-		
-		Assertions.assertThat(animes)
-				.isNotNull()
-				.isNotEmpty()
-				.hasSize(1);
-		
-		Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectName);
-	}
 
 	@Test
     @DisplayName("findById returns anime when successful")
@@ -98,25 +81,25 @@ class AnimeControllerTest {
 	
 	@Test
     @DisplayName("findByName returns list of anime when successful")
-    void findByName_ReturnsListOfAnime_WhenSuccessful(){
+    void findByName_ReturnsPageListOfAnime_WhenSuccessful(){
 		String expectName = AnimeCreator.createValidAnime().getName();
-		List<Anime> animes = animeController.findByName("anime").getBody();
+		Page<Anime> animes = animeController.findByName("anime", Pageable.ofSize(1)).getBody();
 		
 		Assertions.assertThat(animes)
 				.isNotNull()
 				.isNotEmpty()
 				.hasSize(1);
 		
-		Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectName);
+		Assertions.assertThat(animes.toList().get(0).getName()).isEqualTo(expectName);
     }
 	
 	@Test
     @DisplayName("findByName returns an empty list of anime when anime is not found")
-    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
-		BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
-        .thenReturn(Collections.emptyList());
+    void findByName_ReturnsEmptyPageListOfAnime_WhenAnimeIsNotFound(){
+		BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString(), ArgumentMatchers.any()))
+        .thenReturn(Page.empty());
 		
-		List<Anime> animes = animeController.findByName("anime").getBody();
+		Page<Anime> animes = animeController.findByName("anime", Pageable.ofSize(1)).getBody();
 		
 		Assertions.assertThat(animes)
 				.isNotNull()

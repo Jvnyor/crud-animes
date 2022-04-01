@@ -1,6 +1,5 @@
 package com.Jvnyor.animes.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -8,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.Jvnyor.animes.model.Anime;
 import com.Jvnyor.animes.util.AnimeCreator;
@@ -70,8 +71,8 @@ class AnimeRepositoryTest {
 	}
 		
 	@Test
-	@DisplayName("Find by name returns list of anime when Succesful")
-	void findByName_ReturnsListOfAnime_WhenSuccessful() {
+	@DisplayName("Find by name returns page list of anime when Succesful")
+	void findByName_ReturnsPageListOfAnime_WhenSuccessful() {
 			
 			Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 			
@@ -79,7 +80,7 @@ class AnimeRepositoryTest {
 			
 			String name = animeSaved.getName();
 			
-			List<Anime> animes = this.animeRepository.findByName(name);
+			Page<Anime> animes = this.animeRepository.findByName(name, Pageable.ofSize(1));
 			
 			Assertions.assertThat(animes)
 					.isNotEmpty()
@@ -87,10 +88,10 @@ class AnimeRepositoryTest {
 	}
 	
 	@Test
-	@DisplayName("Find by name returns empty list of anime when no anime is found")
-	void findByName_ReturnsEmptyList_WhenAnimeIsNotFound() {
+	@DisplayName("Find by name returns empty page list of anime when no anime is found")
+	void findByName_ReturnsEmptyPageList_WhenAnimeIsNotFound() {
 			
-			List<Anime> animes = this.animeRepository.findByName("inexistente");
+			Page<Anime> animes = this.animeRepository.findByName("inexistente", Pageable.ofSize(1));
 			
 			Assertions.assertThat(animes).isEmpty();
 	}

@@ -1,7 +1,5 @@
 package com.Jvnyor.animes.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springdoc.api.annotations.ParameterObject;
@@ -26,8 +24,8 @@ import com.Jvnyor.animes.requests.AnimeDTO;
 import com.Jvnyor.animes.service.AnimeService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -50,25 +48,14 @@ public class AnimeController {
 		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 	
-	
-	@GetMapping("/all")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Successful Operation"),
-			@ApiResponse(responseCode = "400", description = "When Animes List Does Exist in The Database")
-	})
-	@Operation(summary = "List all animes no paginated", description = "paginated list",tags = {"anime"})
-	public ResponseEntity<List<Anime>> listAllNonPageable() {
-		return ResponseEntity.ok(animeService.listAllNonPageable());
-	}
-	
 	@GetMapping("/find")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Successful Operation"),
 			@ApiResponse(responseCode = "400", description = "When Anime Does Exist in The Database")
 	})
 	@Operation(summary = "Find animes with request param name", description = "animes by name",tags = {"anime"})
-	public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
-		return ResponseEntity.ok(animeService.findByName(name));
+	public ResponseEntity<Page<Anime>> findByName(@RequestParam String name, Pageable pageable) {
+		return ResponseEntity.ok(animeService.findByName(name, pageable));
 	}
 	
 	@GetMapping("/{id}")
@@ -98,7 +85,7 @@ public class AnimeController {
 	})
 	@Operation(summary = "Replace animes with request body using path variable id",description = "animes replacing",tags = {"anime"})
 	public ResponseEntity<Anime> replace(@PathVariable Long id,@RequestBody AnimeDTO animeDTO) {
-		return ResponseEntity.ok(animeService.replace(id,animeDTO));
+		return ResponseEntity.ok(animeService.replace(id, animeDTO));
 	}
 	
 	@DeleteMapping("/{id}")
