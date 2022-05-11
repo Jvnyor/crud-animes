@@ -11,4 +11,5 @@ import com.Jvnyor.animes.model.Anime;
 public interface AnimeRepository extends JpaRepository<Anime, Long> {
 
 	public Page<Anime> findByName(String name, Pageable paegable);
+	
 }
