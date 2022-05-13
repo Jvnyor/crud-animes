@@ -1,42 +1,55 @@
 package com.Jvnyor.animes.client;
 
-import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.Jvnyor.animes.model.Anime;
+import com.Jvnyor.animes.wrapper.PageableResponse;
 
-import java.util.Arrays;
-import java.util.List;
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class SpringClient {
+	
+	private static final String URL = "http://localhost:8080";
+	
     public static void main(String[] args) {
-        ResponseEntity<Anime> entity = new RestTemplate().getForEntity("https://crud-animes.herokuapp.com/api/animes/{id}", Anime.class, 3);
-        log.info(entity);
+        ResponseEntity<Anime> findByIdEntity = new RestTemplate().getForEntity(URL + "/api/animes/{id}", Anime.class, 5);
+        log.info(findByIdEntity);
+        
+        Anime findByIdObject = new RestTemplate().getForObject(URL + "/api/animes/{id}", Anime.class, 5);
 
-        Anime object = new RestTemplate().getForObject("https://crud-animes.herokuapp.com/api/animes/{id}", Anime.class, 3);
+        log.info(findByIdObject);
+        
+        ResponseEntity<Anime> findByNameEntity = new RestTemplate().getForEntity(URL + "/api/animes/find?name=Dragon Ball Z", Anime.class);
+        
+        log.info(findByNameEntity);
+        
+        Anime findByNameObject = new RestTemplate().getForObject(URL + "/api/animes/find?name=Dragon Ball Z", Anime.class);
 
-        log.info(object);
+        log.info(findByNameObject);
 
-        Anime[] animes = new RestTemplate().getForObject("https://crud-animes.herokuapp.com/api/animes/all", Anime[].class);
-
-        log.info(Arrays.toString(animes));
-        //@formatter:off
-        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("https://crud-animes.herokuapp.com/api/animes/all",
+        ResponseEntity<PageableResponse<Anime>> pageAnimes = new RestTemplate().exchange(URL + "/api/animes",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {});
-        //@formatter:on
-        log.info(exchange.getBody());
+                new ParameterizedTypeReference<PageableResponse<Anime>>() {});
+        
+        log.info(pageAnimes);
 
 //        Anime kingdom = Anime.builder().name("kingdom").build();
 //        Anime kingdomSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", kingdom, Anime.class);
 //        log.info("saved anime {}", kingdomSaved);
 
         Anime samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
-        ResponseEntity<Anime> samuraiChamplooSaved = new RestTemplate().exchange("https://crud-animes.herokuapp.com/api/animes/",
+        
+        ResponseEntity<Anime> samuraiChamplooSaved = new RestTemplate().exchange(URL + "/api/animes/",
                 HttpMethod.POST,
                 new HttpEntity<>(samuraiChamploo, createJsonHeader()),
                 Anime.class);
@@ -44,9 +57,10 @@ public class SpringClient {
         log.info("saved anime {}", samuraiChamplooSaved);
 
         Anime animeToBeUpdated = samuraiChamplooSaved.getBody();
+        
         animeToBeUpdated.setName("Samurai Champloo 2");
 
-        ResponseEntity<Void> samuraiChamplooUpdated = new RestTemplate().exchange("https://crud-animes.herokuapp.com/api/animes/{id}",
+        ResponseEntity<Void> samuraiChamplooUpdated = new RestTemplate().exchange(URL + "/api/animes/{id}",
                 HttpMethod.PUT,
                 new HttpEntity<>(animeToBeUpdated, createJsonHeader()),
                 Void.class,
@@ -54,7 +68,7 @@ public class SpringClient {
 
         log.info("updated anime {}",samuraiChamplooUpdated);
 
-        ResponseEntity<Void> samuraiChamplooDeleted = new RestTemplate().exchange("https://crud-animes.herokuapp.com/api/animes/{id}",
+        ResponseEntity<Void> samuraiChamplooDeleted = new RestTemplate().exchange(URL + "/api/animes/{id}",
                 HttpMethod.DELETE,
                 null,
                 Void.class,

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Jvnyor.animes.model.Anime;
@@ -41,9 +42,9 @@ public class AnimeController {
 		return ResponseEntity.ok(animeService.listAllPageable(pageable));
 	}
 
-	@GetMapping("/name/{name}")
+	@GetMapping("/find")
 	@Operation(summary = "Find animes with request param name", description = "animes by name", tags = { "anime" })
-	public ResponseEntity<Page<Anime>> findByName(@PathVariable String name, @ParameterObject Pageable pageable) {
+	public ResponseEntity<Page<Anime>> findByName(@RequestParam String name, @ParameterObject Pageable pageable) {
 		return ResponseEntity.ok(animeService.findByName(name, pageable));
 	}
 
